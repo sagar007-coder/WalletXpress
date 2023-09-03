@@ -20,7 +20,8 @@
         <module>transaction-service</module>
         <module>transaction-service</module>
 		<module>transaction-service</module>
-	</modules>
+        <module>notification-service</module>
+    </modules>
     <properties>
 		<java.version>1.8</java.version>
 	</properties>

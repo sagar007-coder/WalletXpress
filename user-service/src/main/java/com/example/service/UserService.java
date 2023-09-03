@@ -49,5 +49,12 @@ public class UserService
 
 
     }
+    public User getByPhone(String phone) throws Exception {
+        return userRepository.findByPhone(phone);
+
+
+
+
+    }
 
 }

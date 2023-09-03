@@ -56,7 +56,7 @@ public class WalletService {
     //user transaction flow
 
     @KafkaListener(topics = {TRANSACTION_CREATED_TOPIC}, groupId = "jdbl123")
-    public void updateWallet(String msg) throws ParseException, JsonProcessingException {
+    public void updateWallets(String msg) throws ParseException, JsonProcessingException {
 
         JSONObject obj = (JSONObject) new JSONParser().parse(msg);
 
@@ -67,13 +67,13 @@ public class WalletService {
         try {
 
 
-            Wallet senderwallet = walletRepository.findByWalletId(senderWalletId);
+            Wallet senderWallet = walletRepository.findByWalletId(senderWalletId);
             Wallet receiverWallet = walletRepository.findByWalletId(receiverWalletID);
 
-            if (senderwallet == null || receiverWallet == null || senderwallet.getBalance() < amount) {
+            if (senderWallet == null || receiverWallet == null || senderWallet.getBalance() < amount) {
                 //checking if wallet exist i^
                 obj = this.init(receiverWalletID, senderWalletId, amount, transactionID, "FAILED");
-                obj.put("senderWalletBalance", senderwallet == null ? 0 : senderwallet.getBalance());
+                obj.put("senderWalletBalance", senderWallet == null ? 0 : senderWallet.getBalance());
 
                 kafkaTemplate.send(WALLET_UPDATED_TOPIC, objectMapper.writeValueAsString(obj));
                 return;

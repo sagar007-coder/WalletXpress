@@ -27,4 +27,11 @@ public class UserController {
             User user =  userService.get(userID);
           return   Utils.convertToUserResponse(user);
     }
+
+
+    @GetMapping("/user/phone/{phone}")
+    public GetUserResponse getUserByPhone(@PathVariable("phone")String phone) throws Exception {
+        User user =  userService.getByPhone(phone);
+        return   Utils.convertToUserResponse(user);
+    }
 }
